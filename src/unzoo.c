@@ -244,6 +244,10 @@
 *H
 */
 #include        <stdio.h>
+#include        <string.h>
+#include        <stdlib.h>
+#include        <sys/stat.h>
+#include        <utime.h>
 
 
 /****************************************************************************
@@ -613,8 +617,9 @@ char            Cmd [256];
 **  members with the correct time as stored in the archive.
 */
 #ifdef  SYS_IS_UNIX
-unsigned int   Secs [2];
-#define SETF_TIME(patl,secs)    (Secs[0]=Secs[1]=(secs),!utime((patl),Secs))
+struct utimbuf Secs;
+#define SETF_TIME(patl,secs) \
+    (Secs.actime = Secs.modtime = (secs), !utime((patl), &Secs))
 #endif
 #ifdef  SYS_IS_DOS_DJGPP
 unsigned long   Secs [2];
