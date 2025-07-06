@@ -1466,7 +1466,7 @@ struct {
 int             DescReadArch ()
 {
     /* read the text at the beginning                                      */
-    BlckReadArch(Descript.text,20L);  Descript.text[20] = '\0';
+    BlckReadArch(Descript.text,20L);  Descript.text[19] = '\0';
 
     /* try to read the magic words                                         */
     if ( (Descript.magic = WordReadArch()) != (unsigned long)0xfdc4a7dcL )
