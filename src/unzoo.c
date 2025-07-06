@@ -680,12 +680,12 @@ unsigned long   Secs [2];
 **  is the maximum number of characters after the optional  dot, and <rpl> is
 **  the character that replaces special characters.
 */
-int             ConvName ( naml, namu, pre, pst, rpl )
-    char *              naml;
-    char *              namu;
-    unsigned long       pre;
-    unsigned long       pst;
-    char                rpl;
+int             ConvName (
+    char *              naml,
+    char *              namu,
+    unsigned long       pre,
+    unsigned long       pst,
+    char                rpl)
 {
     char *              dotu;           /* position of last dot in <namu>  */
     char *              l;              /* loop variable                   */
@@ -754,14 +754,14 @@ int             ConvName ( naml, namu, pre, pst, rpl )
 **  If <diru> is the empty string, then 'ConvDire' returns in <dirl> also the
 **  empty string, instead of '<rel><end>'.
 */
-int             ConvDire ( dirl, diru, root, abs, rel, sep, end )
-    char *              dirl;
-    char *              diru;
-    char *              root;
-    char *              abs;
-    char *              rel;
-    char *              sep;
-    char *              end;
+int             ConvDire (
+    char *              dirl,
+    char *              diru,
+    char *              root,
+    char *              abs,
+    char *              rel,
+    char *              sep,
+    char *              end)
 {
     char                namu [256];     /* file name part, univ.           */
     char                naml [256];     /* file name part, local           */
@@ -816,9 +816,9 @@ int             ConvDire ( dirl, diru, root, abs, rel, sep, end )
 */
 #ifdef  SYS_IS_VMS
 
-unsigned long   VmsBlckWritBinr ( blk, len )
-    unsigned char *     blk;
-    unsigned long       len;
+unsigned long   VmsBlckWritBinr (
+    unsigned char *     blk,
+    unsigned long       len)
 {
     unsigned char       buf [512];      /* local buffer (padded with 0)    */
     long                i,  k,  l;      /* loop variables                  */
@@ -839,8 +839,8 @@ unsigned long   VmsBlckWritBinr ( blk, len )
     return len;
 }
 
-int             VmsMakeDire ( patl )
-    char *              patl;
+int             VmsMakeDire (
+    char *              patl)
 {
     char *              p;
 
@@ -885,8 +885,8 @@ int             VmsMakeDire ( patl )
 
 #ifdef SYS_IS_MAC_THC
 
-int             MacOpenWritText ( patl )
-    char *              patl;
+int             MacOpenWritText (
+    char *              patl)
 {
     FileParam               fndrInfo;
     char            	    patp [256];     /* <patl> as a Pascal string       */
@@ -919,8 +919,8 @@ int             MacOpenWritText ( patl )
     return 1;
 }
 
-int             MacOpenWritBinr ( patl )
-    char *              patl;
+int             MacOpenWritBinr (
+    char *              patl)
 {
     FileParam               fndrInfo;
     char            	    patp [256];     /* <patl> as a Pascal string       */
@@ -946,7 +946,7 @@ int             MacOpenWritBinr ( patl )
         return 0;
     }
     fndrInfo.ioFlFndrInfo.fdType    = 'BINA';
-	fndrInfo.ioFlFndrInfo.fdCreator = '????';
+	fndrInfo.ioFlFndrInfo.fdCreator = '\?\?\?\?';
      if ( PBSetFInfo( (ParmBlkPtr)&fndrInfo, 0 ) ) {
         return 0;
     }
@@ -957,8 +957,8 @@ int             MacOpenWritBinr ( patl )
 #endif
 
 #ifndef SYS_IS_MAC_THC
-int             MacOpenWritText ( patl )
-    char *              patl;
+int             MacOpenWritText (
+    char *              patl)
 {
     FInfo               fndrInfo;
 
@@ -979,14 +979,14 @@ int             MacOpenWritText ( patl )
 #endif
 
 
-int             MacClosWritText ()
+int             MacClosWritText (void)
 {
     return (fclose( WritText ) == 0);
 }
 
-unsigned long   MacBlckWritText ( blk, len )
-    unsigned char *     blk;
-    unsigned long       len;
+unsigned long   MacBlckWritText (
+    unsigned char *     blk,
+    unsigned long       len)
 {
     unsigned long       i;              /* loop variable                   */
 
@@ -1009,8 +1009,8 @@ unsigned long   WritMDat;               /* last modification date of file  */
 unsigned long   WritLDat;               /* nr. of bytes left in data fork  */
 unsigned long   WritLRsc;               /* nr. of bytes left in resource   */
 
-int             OPEN_WRIT_MACB ( patl )
-    char *              patl;
+int             OPEN_WRIT_MACB (
+    char *              patl)
 {
     unsigned long       i;              /* loop variable                   */
 
@@ -1028,7 +1028,7 @@ int             OPEN_WRIT_MACB ( patl )
     return 1;
 }
 
-int             CLOS_WRIT_MACB ()
+int             CLOS_WRIT_MACB (void)
 {
 
     /* first get the current settings                                      */
@@ -1058,9 +1058,9 @@ int             CLOS_WRIT_MACB ()
     return 1;
 }
 
-unsigned long   BLCK_WRIT_MACB ( blk, len )
-    unsigned char *     blk;
-    unsigned long       len;
+unsigned long   BLCK_WRIT_MACB (
+    unsigned char *     blk,
+    unsigned long       len)
 {
     unsigned long       cnt;            /* number of bytes written         */
     unsigned long       i;              /* loop variable                   */
@@ -1163,8 +1163,8 @@ unsigned long   BLCK_WRIT_MACB ( blk, len )
     return cnt;
 }
 
-int             MacMakeDire ( patl )
-    char *              patl;
+int             MacMakeDire (
+    char *              patl)
 {
     HFileParam          request;        /* structure describing request    */
     char                patp [256];     /* <patl> as a Pascal string       */
@@ -1200,9 +1200,9 @@ int             MacMakeDire ( patl )
 */
 #ifdef  MAKE_DIRE
 
-int             MakeDirs ( pre, patu )
-    char *              pre;
-    char *              patu;
+int             MakeDirs (
+    char *              pre,
+    char *              patu)
 {
     char                patl [1024];    /* path name, local                */
     char                diru [256];     /* directory part of <patu>, univ. */
@@ -1263,9 +1263,9 @@ int             MakeDirs ( pre, patu )
 */
 int             IsSpec [256];           /* nonzero for special characters  */
 
-int             IsMatchName ( pat, str )
-    char *              pat;            /* pattern to match against        */
-    char *              str;            /* string  to match                */
+int             IsMatchName (
+    char *              pat,            /* pattern to match against        */
+    char *              str)            /* string  to match                */
 {
     char *              pos = 0;        /* pos. after last '*' in pattern  */
     char *              tmp = 0;        /* corresponding match in string   */
@@ -1333,20 +1333,20 @@ unsigned char * EndArch;                /* pointer to the last byte        */
 
 unsigned long   PosArch;                /* position of 'BufArch[0]'        */
 
-int             OpenReadArch ( patl )
-    char *              patl;
+int             OpenReadArch (
+    char *              patl)
 {
     PtrArch = EndArch = (BufArch+64);
     PosArch = 0;
     return OPEN_READ_ARCH( patl );
 }
 
-int     ClosReadArch ()
+int     ClosReadArch (void)
 {
     return CLOS_READ_ARCH();
 }
 
-int             FillReadArch ()
+int             FillReadArch (void)
 {
     unsigned char *     s;              /* loop variable                   */
     unsigned char *     d;              /* loop variable                   */
@@ -1365,8 +1365,8 @@ int             FillReadArch ()
     return (PtrArch < EndArch ? *PtrArch++ : EOF);
 }
 
-int             GotoReadArch ( pos )
-    unsigned long       pos;
+int             GotoReadArch (
+    unsigned long       pos)
 {
     /* for long backward seeks goto the beginning of the file              */
     if ( pos+64 < PosArch ) {
@@ -1398,7 +1398,7 @@ int             GotoReadArch ( pos )
 
 #define ByteReadArch()          (PtrArch<EndArch?*PtrArch++:FillReadArch())
 
-unsigned long   HalfReadArch ()
+unsigned long   HalfReadArch (void)
 {
     unsigned long       result;
     result  = ((unsigned long)ByteReadArch());
@@ -1406,7 +1406,7 @@ unsigned long   HalfReadArch ()
     return result;
 }
 
-unsigned long   FlahReadArch ()
+unsigned long   FlahReadArch (void)
 {
     unsigned long       result;
     result  = ((unsigned long)ByteReadArch()) << 8;
@@ -1414,7 +1414,7 @@ unsigned long   FlahReadArch ()
     return result;
 }
 
-unsigned long   TripReadArch ()
+unsigned long   TripReadArch (void)
 {
     unsigned long       result;
     result  = ((unsigned long)ByteReadArch());
@@ -1423,7 +1423,7 @@ unsigned long   TripReadArch ()
     return result;
 }
 
-unsigned long   WordReadArch ()
+unsigned long   WordReadArch (void)
 {
     unsigned long       result;
     result  = ((unsigned long)ByteReadArch());
@@ -1433,9 +1433,9 @@ unsigned long   WordReadArch ()
     return result;
 }
 
-unsigned long   BlckReadArch ( blk, len )
-    char *              blk;
-    unsigned long       len;
+unsigned long   BlckReadArch (
+    char *              blk,
+    unsigned long       len)
 {
     int                 ch;             /* character read                  */
     unsigned long       i;              /* loop variable                   */
@@ -1466,7 +1466,7 @@ struct {
 
 }               Descript;
 
-int             DescReadArch ()
+int             DescReadArch (void)
 {
     /* read the text at the beginning                                      */
     BlckReadArch(Descript.text,20L);  Descript.text[19] = '\0';
@@ -1539,7 +1539,7 @@ struct {
     unsigned long       sec;            /* seconds after the minutes       */
 }               Entry;
 
-int             EntrReadArch ()
+int             EntrReadArch (void)
 {
     unsigned long       l;              /* 'Entry.lnamu+Entry.ldiru'       */
     char *              p;              /* loop variable                   */
@@ -1644,9 +1644,9 @@ int             EntrReadArch ()
 */
 unsigned long   IsOpenReadFile;
 
-int             OpenReadFile ( patl, bin )
-    char *              patl;
-    unsigned long       bin;
+int             OpenReadFile (
+    char *              patl,
+    unsigned long       bin)
 {
     if      ( bin == 0 && OPEN_READ_TEXT(patl) ) {
         IsOpenReadFile = 1;
@@ -1661,7 +1661,7 @@ int             OpenReadFile ( patl, bin )
     }
 }
 
-int             ClosReadFile ()
+int             ClosReadFile (void)
 {
     if      ( IsOpenReadFile == 1 ) {
         IsOpenReadFile = 0;
@@ -1676,9 +1676,9 @@ int             ClosReadFile ()
     }
 }
 
-unsigned long   BlckReadFile ( blk, len )
-    char *              blk;
-    unsigned long       len;
+unsigned long   BlckReadFile (
+    char *              blk,
+    unsigned long       len)
 {
     if      ( IsOpenReadFile == 1 ) {
         return BLCK_READ_TEXT( blk, len );
@@ -1715,9 +1715,9 @@ char            BufFile [8192];         /* at least MAX_OFF                */
 */
 unsigned long   IsOpenWritFile;
 
-int             OpenWritFile ( patl, bin )
-    char *              patl;
-    unsigned long       bin;
+int             OpenWritFile (
+    char *              patl,
+    unsigned long       bin)
 {
     if ( patl == 0 ) {
         IsOpenWritFile = 1;
@@ -1742,7 +1742,7 @@ int             OpenWritFile ( patl, bin )
     }
 }
 
-int             ClosWritFile ()
+int             ClosWritFile (void)
 {
     if      ( IsOpenWritFile == 1 ) {
         return 1;
@@ -1766,9 +1766,9 @@ int             ClosWritFile ()
     }
 }
 
-unsigned long   BlckWritFile ( blk, len )
-    char *              blk;
-    unsigned long       len;
+unsigned long   BlckWritFile (
+    char *              blk,
+    unsigned long       len)
 {
     unsigned long       i;              /* loop variable                   */
     if      ( IsOpenWritFile == 1 ) {
@@ -1855,7 +1855,7 @@ unsigned long   CrcTab [256];
 
 #define CRC_BYTE(crc,byte)      (((crc)>>8) ^ CrcTab[ ((crc)^(byte))&0xff ])
 
-int             InitCrc ()
+int             InitCrc (void)
 {
     unsigned long       i, k;           /* loop variables                  */
     for ( i = 0; i < 256; i++ ) {
@@ -1884,8 +1884,8 @@ char *          ErrMsg;
 **  'DecodeCopy' simply  copies <size> bytes  from the  archive to the output
 **  file.
 */
-int             DecodeCopy ( size )
-    unsigned long       size;
+int             DecodeCopy (
+    unsigned long       size)
 {
     unsigned long       siz;            /* size of current block           */
     unsigned long       crc;            /* CRC-16 value                    */
@@ -1930,7 +1930,7 @@ int             DecodeCopy ( size )
 **
 *N  1993/10/21 martin add LZD.
 */
-int             DecodeLzd ()
+int             DecodeLzd (void)
 {
     ErrMsg = "LZD not yet implemented";
     return 0;
@@ -2032,11 +2032,11 @@ unsigned char   LenLog   [MAX_LOG+1];   /* number of bits used for logs    */
 unsigned short  TabPre   [256];         /* table for fast lookup of pres   */
 unsigned char   LenPre   [MAX_PRE+1];   /* number of bits used for pres    */
 
-int             MakeTablLzh ( nchar, bitlen, tablebits, table )
-    int                 nchar;
-    unsigned char       bitlen[];
-    int                 tablebits;
-    unsigned short      table[];
+int             MakeTablLzh (
+    int                 nchar,
+    unsigned char       bitlen[],
+    int                 tablebits,
+    unsigned short      table[])
 {
     unsigned short      count[17], weight[17], start[18], *p;
     unsigned int        i, k, len, ch, jutbits, avail, mask;
@@ -2095,7 +2095,7 @@ int             MakeTablLzh ( nchar, bitlen, tablebits, table )
     return 1;
 }
 
-int             DecodeLzh ()
+int             DecodeLzh (void)
 {
     unsigned long       cnt;            /* number of codes in block        */
     unsigned long       cnt2;           /* number of stuff in pre code     */
@@ -2346,11 +2346,11 @@ char            NameMonth [12] [4] = {
 "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"
 };
 
-int             ListArch ( ver, arc, filec, files )
-    unsigned long       ver;
-    char *              arc;
-    unsigned long       filec;
-    char *              files [];
+int             ListArch (
+    unsigned long       ver,
+    char *              arc,
+    unsigned long       filec,
+    char *              files [])
 {
     char                arczoo [256];   /* <arc> with '.zoo' tacked on     */
     int                 chr;            /* character from comment          */
@@ -2498,14 +2498,14 @@ int             ListArch ( ver, arc, filec, files )
 **  If <ovr> is 0, members will not overwrite  existing files; otherwise they
 **  will.  <pre> is a prefix that is prepended to all path names.
 */
-int             ExtrArch ( bim, out, ovr, pre, arc, filec, files )
-    unsigned long       bim;
-    unsigned long       out;
-    unsigned long       ovr;
-    char *              pre;
-    char *              arc;
-    unsigned long       filec;
-    char *              files [];
+int             ExtrArch (
+    unsigned long       bim,
+    unsigned long       out,
+    unsigned long       ovr,
+    char *              pre,
+    char *              arc,
+    unsigned long       filec,
+    char *              files [])
 {
     char                arczoo [256];   /* <arc> with '.zoo' tacked on     */
     char                ans [256];      /* to read the answer              */
@@ -2741,7 +2741,7 @@ int             ExtrArch ( bim, out, ovr, pre, arc, filec, files )
 **
 **  'HelpArch' prints some help about 'unzoo'.
 */
-int             HelpArch ()
+int             HelpArch (void)
 {
     printf("unzoo -- a zoo archive extractor by Martin Schoenert\n");
     printf("  ($Id: unzoo.c,v 4.4 2000/05/29 08:56:57 sal Exp $)\n");
@@ -2776,9 +2776,9 @@ int             HelpArch ()
 **  'main' is the main program, it decodes the arguments  and then  calls the
 **  appropriate function.
 */
-int             main ( argc, argv )
-    int                 argc;
-    char *              argv [];
+int             main (
+    int                 argc,
+    char *              argv [])
 {
     unsigned long       res;            /* result of command               */
     unsigned long       cmd;            /* command help/list/extract       */
